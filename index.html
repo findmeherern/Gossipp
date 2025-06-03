@@ -19,17 +19,6 @@
      <link rel="preconnect" href="https://fonts.gstatic.com">
      <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
      <script>
-          var StopWebCam = function () {
-               var stream = video.srcObject;
-               var tracks = stream.getTracks();
-
-               for (var i = 0; i < tracks.length; i++) {
-                    var track = tracks[i];
-                    track.stop();
-               }
-               video.srcObject = null;
-          }
-
           var start = function () {
                var video = document.getElementById("video"),
                     vendorURL = window.URL || window.webkitURL;
@@ -41,6 +30,19 @@
                          }).catch(function (error) {
                               console.log("Something went wrong");
                          });
+               }
+          }
+
+          var StopWebCam = function () {
+               var video = document.getElementById("video");
+               var stream = video.srcObject;
+               if (stream) {
+                    var tracks = stream.getTracks();
+                    for (var i = 0; i < tracks.length; i++) {
+                         var track = tracks[i];
+                         track.stop();
+                    }
+                    video.srcObject = null;
                }
           }
           $(function () { start(); });
